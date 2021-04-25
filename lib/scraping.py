@@ -52,7 +52,12 @@ def selenium_scraping(url, url_popup, select_time, tickets_to_book, name_to_book
                 # Once the popup is displayed, select the correct time
                 WebDriverWait(driver, 1).until(ec.element_to_be_clickable((By.CSS_SELECTOR, select_time)))
                 time_select = driver.find_element_by_css_selector(select_time)
-                ActionChains(driver).move_to_element(time_select).click().perform()
+                scroll = ActionChains(driver).move_to_element(time_select).click().perform()
+                print(scroll)
+
+                if scroll is None:
+                    time_select.click()
+
 
                 # Console prints
                 print('Rellenando el formulario con los siguientes datos:', '\n')
@@ -61,6 +66,8 @@ def selenium_scraping(url, url_popup, select_time, tickets_to_book, name_to_book
                 print('\t', '- Apellido(s):', surname_to_book, '\n')
                 print('\t', '- Email:', email_to_book, '\n')
                 print('\t', '- Teléfono:', phone_number_to_book, '\n')
+
+                print('number of tickets \n')
 
                 # Fulfill the form
                 # Number of tickets
@@ -83,6 +90,10 @@ def selenium_scraping(url, url_popup, select_time, tickets_to_book, name_to_book
                 phone_number = driver.find_element_by_name('ev_specialform_5')
                 phone_number.send_keys(phone_number_to_book)
 
+                # Email verification
+                email_verification = driver.find_element_by_name('ev_specialform_12')
+                email_verification.send_keys(email_to_book)
+
                 # COVID-19 acceptance
                 checkbox = driver.find_element_by_name('checkAGB')
                 checkbox.click()
@@ -96,9 +107,9 @@ def selenium_scraping(url, url_popup, select_time, tickets_to_book, name_to_book
             else:
                 driver.refresh()
 
-        except ElementNotInteractableException:
-            print('El elemento seleccionado no está disponible, por lo que no se puede interactuar no él', '\n')
-            driver.refresh()
+        # except ElementNotInteractableException:
+        #     print('El elemento seleccionado no está disponible, por lo que no se puede interactuar no él', '\n')
+        #     driver.refresh()
 
         except TimeoutException:
             print('El horario aún no está disponible...', '\n')
