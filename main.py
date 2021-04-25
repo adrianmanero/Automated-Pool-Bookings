@@ -14,7 +14,7 @@ URL = 'https://shop.syrdall-schwemm.lu/event.html?eventId=3'
 TIMETABLE_URL = 'https://shop.syrdall-schwemm.lu/reservation/ajax/calendar?eventId=3'
 
 # Read JSON containig all the booking information
-data = json_processing.read_url()
+data = json_processing.read_json()
 
 # Booking information
 DAY_TO_BOOK = data['day']
@@ -43,9 +43,12 @@ def main():
     if event_id == 0:
         print('Esperando a que añadan nuevas horas...', '\n')
         while event_id == 0:
-            event_id = json_processing.read_timetables(TIMETABLE_URL, DAY_TO_BOOK, MONTH_TO_BOOK, YEAR_TO_BOOK, TIME_TO_BOOK)
+            d = json_processing.read_json()
+            event_id = json_processing.read_timetables(TIMETABLE_URL, d['day'], d['month'], d['year'], d['start_time'])
             popup = 'div[data-eventid="' + str(event_id) + '"]'
             select_time = 'a[data-eventid="' + str(event_id) + '"]'
+
+        scraping.selenium_scraping(URL, popup, select_time, TICKETS_TO_BOOK, NAME_TO_BOOK, SURNAME_TO_BOOK, EMAIL_TO_BOOK, PHONE_NUMBER_TO_BOOK)
 
     else:
         # Web scraping

@@ -1,8 +1,8 @@
 from urllib import request
 import json
 
-# Function that reads the content of a web page
-def read_url():
+# Function that reads the content of a JSON file
+def read_json():
     with open('data.json') as fp:
         data = json.load(fp)
 

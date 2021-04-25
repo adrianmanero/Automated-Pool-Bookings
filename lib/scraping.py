@@ -53,7 +53,6 @@ def selenium_scraping(url, url_popup, select_time, tickets_to_book, name_to_book
                 WebDriverWait(driver, 1).until(ec.element_to_be_clickable((By.CSS_SELECTOR, select_time)))
                 time_select = driver.find_element_by_css_selector(select_time)
                 scroll = ActionChains(driver).move_to_element(time_select).click().perform()
-                print(scroll)
 
                 if scroll is None:
                     time_select.click()
@@ -103,10 +102,6 @@ def selenium_scraping(url, url_popup, select_time, tickets_to_book, name_to_book
 
             else:
                 driver.refresh()
-
-        # except ElementNotInteractableException:
-        #     print('El elemento seleccionado no está disponible, por lo que no se puede interactuar no él', '\n')
-        #     driver.refresh()
 
         except TimeoutException:
             print('El horario aún no está disponible...', '\n')
