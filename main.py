@@ -27,11 +27,6 @@ SURNAME_TO_BOOK = data['surname']
 EMAIL_TO_BOOK = data['email']
 PHONE_NUMBER_TO_BOOK = data['phone_number']
 
-# Information obtained from the timetables URL, related to the day and time of the booking
-EVENT_ID = json_processing.read_timetables(TIMETABLE_URL, DAY_TO_BOOK, MONTH_TO_BOOK, YEAR_TO_BOOK, TIME_TO_BOOK)
-POPUP = 'div[data-eventid="' + str(EVENT_ID) + '"]'
-SELECT_TIME = 'a[data-eventid="' + str(EVENT_ID) + '"]'
-
 
 # Main function
 def main():
@@ -39,13 +34,22 @@ def main():
     print('SCRIPT DE RESERVA DE HORARIOS (v1.0)', '\n')
     print('Bienvenido, comenzando...', '\n')
 
+    # Information obtained from the timetables URL, related to the day and time of the booking
+    event_id = json_processing.read_timetables(TIMETABLE_URL, DAY_TO_BOOK, MONTH_TO_BOOK, YEAR_TO_BOOK, TIME_TO_BOOK)
+    popup = 'div[data-eventid="' + str(event_id) + '"]'
+    select_time = 'a[data-eventid="' + str(event_id) + '"]'
+
     # Check if the event is in the timetables page
-    if EVENT_ID == 0:
-        print('Ha habido un error al buscar la hora y el día seleccionados, revisa el archivo data.json', '\n')
+    if event_id == 0:
+        print('Esperando a que añadan nuevas horas...', '\n')
+        while event_id == 0:
+            event_id = json_processing.read_timetables(TIMETABLE_URL, DAY_TO_BOOK, MONTH_TO_BOOK, YEAR_TO_BOOK, TIME_TO_BOOK)
+            popup = 'div[data-eventid="' + str(event_id) + '"]'
+            select_time = 'a[data-eventid="' + str(event_id) + '"]'
 
     else:
         # Web scraping
-        scraping.selenium_scraping(URL, POPUP, SELECT_TIME, TICKETS_TO_BOOK, NAME_TO_BOOK, SURNAME_TO_BOOK, EMAIL_TO_BOOK, PHONE_NUMBER_TO_BOOK)
+        scraping.selenium_scraping(URL, popup, select_time, TICKETS_TO_BOOK, NAME_TO_BOOK, SURNAME_TO_BOOK, EMAIL_TO_BOOK, PHONE_NUMBER_TO_BOOK)
 
     # Wait for the user to interact with the console to exit
     done = input('Pulsa la tecla "enter" para salir')

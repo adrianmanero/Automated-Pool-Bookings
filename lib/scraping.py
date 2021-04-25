@@ -58,7 +58,6 @@ def selenium_scraping(url, url_popup, select_time, tickets_to_book, name_to_book
                 if scroll is None:
                     time_select.click()
 
-
                 # Console prints
                 print('Rellenando el formulario con los siguientes datos:', '\n')
                 print('\t', '- Número de Tickets:', tickets_to_book, '\n')
@@ -66,8 +65,6 @@ def selenium_scraping(url, url_popup, select_time, tickets_to_book, name_to_book
                 print('\t', '- Apellido(s):', surname_to_book, '\n')
                 print('\t', '- Email:', email_to_book, '\n')
                 print('\t', '- Teléfono:', phone_number_to_book, '\n')
-
-                print('number of tickets \n')
 
                 # Fulfill the form
                 # Number of tickets
