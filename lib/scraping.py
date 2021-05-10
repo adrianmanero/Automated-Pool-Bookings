@@ -78,16 +78,16 @@ def selenium_scraping(url, url_popup, select_time, tickets_to_book, name_to_book
                 surname = driver.find_element_by_name('ev_specialform_2')
                 surname.send_keys(surname_to_book)
 
-                # Email
-                email = driver.find_element_by_name('ev_specialform_3')
-                email.send_keys(email_to_book)
-
                 # Phone Number
                 phone_number = driver.find_element_by_name('ev_specialform_5')
                 phone_number.send_keys(phone_number_to_book)
 
+                # Email
+                email = driver.find_element_by_name('ev_specialform_13')
+                email.send_keys(email_to_book)
+
                 # Email verification
-                email_verification = driver.find_element_by_name('ev_specialform_12')
+                email_verification = driver.find_element_by_name('ev_specialform_14')
                 email_verification.send_keys(email_to_book)
 
                 # COVID-19 acceptance
@@ -98,7 +98,7 @@ def selenium_scraping(url, url_popup, select_time, tickets_to_book, name_to_book
                 confirm = driver.find_element_by_name('submit_btn')
                 confirm.click()
 
-                print('LA RESERVA HA SIDO HECHA', '\n \n')
+                print('LA RESERVA HA SIDO REALIZADA', '\n \n')
 
             else:
                 driver.refresh()
